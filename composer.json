@@ -1,7 +1,7 @@
 {
     "name": "eggdigital/service",
     "description": "",
-    "type": "library",
+    "type": "package",
     "license": "GNU General Public License (GPL)",
     "authors": [
         {
