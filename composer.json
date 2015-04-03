@@ -1,6 +1,8 @@
 {
     "name": "eggdigital/service",
     "description": "",
+    "type": "library",
+    "license": "GNU General Public License (GPL)",
     "authors": [
         {
             "name": "Akkapong Kajornwongwattana",
