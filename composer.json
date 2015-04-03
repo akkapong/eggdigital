@@ -1,5 +1,5 @@
 {
-    "name": "eggdigital222/service",
+    "name": "eggdigital/service",
     "description": "",
     "type": "library",
     "license": "GNU General Public License (GPL)",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-0": {
-            "EggDigital\\Service111": "src/"
+            "EggDigital\\Service": "src/"
         }
     },
     "minimum-stability": "dev"
