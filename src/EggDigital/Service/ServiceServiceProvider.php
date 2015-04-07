@@ -35,11 +35,17 @@ class ServiceServiceProvider extends ServiceProvider
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('EggLog', 'EggDigital\Service\Facades\EggLog');
+            $loader->alias('PcsClient', 'EggDigital\Service\Facades\PcsClient');
         });
 
         $this->app['service\egglog'] = $this->app->share(function($app)
         {
             return new Provider\EggLogProvider;
+        });
+
+        $this->app['service\pcsclient'] = $this->app->share(function($app)
+        {
+            return new Provider\PcsClientProvider;
         });
     }
 
@@ -52,6 +58,7 @@ class ServiceServiceProvider extends ServiceProvider
     {
         return array(
             'service\egglog',
+            'service\pcsclient',
         );
     }
 }
