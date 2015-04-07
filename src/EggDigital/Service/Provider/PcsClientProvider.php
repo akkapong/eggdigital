@@ -2,7 +2,7 @@
 
 namespace EggDigital\Service\Provider;
 
-class PcsClient {
+class PcsClientProvider {
 
     protected $user_id;
     protected $service;
