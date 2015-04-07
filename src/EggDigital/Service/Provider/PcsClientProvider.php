@@ -54,6 +54,7 @@ class PcsClient {
 
     public function getAllPermission($service='', $sso_id='') {
 
+        echo "==== 111 ====";
         $params = array();
         $params["user_id"] = ($sso_id) ? $sso_id : $this->user_id ;
         $params["service"] = ($service) ? $service : $this->service ;
