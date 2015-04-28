@@ -307,7 +307,13 @@ class EggLogProvider
         self::writeLogJson($data);
     }
 
+    /* Change name, this method for support old*/
     public function logCurlIn(array $params)
+    {
+        $this->logCurlReq($params);
+    }
+
+    public function logCurlReq(array $params)
     {
         if ( ! isset($params['description'])) {
             $params['description'] = '';
@@ -348,7 +354,13 @@ class EggLogProvider
         self::writeLogJson($data);
     }
 
+    /* Change name, this method for support old*/
     public function logCurlOut(array $params)
+    {
+        $this->logCurlRes($params);
+    }
+
+    public function logCurlRes(array $params)
     {
         $end            = microtime(true);
         $response_time  = number_format(($end - $params['start']), 2);
