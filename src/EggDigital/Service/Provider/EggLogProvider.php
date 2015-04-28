@@ -5,7 +5,7 @@ namespace EggDigital\Service\Provider;
 class EggLogProvider
 {
     protected $_activity_log_threshold = 3;
-    protected $_enabled                = FALSE;
+    protected $_enabled                = TRUE;
     protected $_date_fmt               = 'Y-m-d H:i:s';
     protected $_levels                 = array('ERROR' => '1', 'INFO' => '2', 'ALL' => '3');
     protected $_activity_type          = array(
@@ -22,8 +22,7 @@ class EggLogProvider
     public function __construct()
     {
         try {
-            //$config = \Config::get('config');
-            $config = \Config::get('service::'.$_SERVER['LARAVEL_ENV'].'/config');
+            $config = \Config::get('config');
 
             if (empty($config['LOG_PATH'])) {
                 throw new \Exception('Not config log path');
@@ -307,13 +306,7 @@ class EggLogProvider
         self::writeLogJson($data);
     }
 
-    /* Change name, this method for support old*/
     public function logCurlIn(array $params)
-    {
-        $this->logCurlReq($params);
-    }
-
-    public function logCurlReq(array $params)
     {
         if ( ! isset($params['description'])) {
             $params['description'] = '';
@@ -354,13 +347,7 @@ class EggLogProvider
         self::writeLogJson($data);
     }
 
-    /* Change name, this method for support old*/
     public function logCurlOut(array $params)
-    {
-        $this->logCurlRes($params);
-    }
-
-    public function logCurlRes(array $params)
     {
         $end            = microtime(true);
         $response_time  = number_format(($end - $params['start']), 2);

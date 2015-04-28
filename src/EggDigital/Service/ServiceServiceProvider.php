@@ -21,7 +21,7 @@ class ServiceServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('eggdigital/service');
+        // $this->package('eggdigital/service');
     }
 
     /**
