@@ -113,7 +113,7 @@ class EggLogProvider
     private function _format_message($message)
     {
         //validate message
-        $isValid = self::_validateMessage($message);
+        $isValid = $this->_validateMessage($message);
 
         if (!$isValid) {
             return $isValid;
@@ -176,25 +176,25 @@ class EggLogProvider
     private function _write_log($level, $message)
     {
         // check message and change format 
-        $msg = self::_format_message($message);
+        $msg = $this->_format_message($message);
 
         if (!$msg){
             return FALSE;
         }
 
         // check level and change format 
-        $level = self::_format_level($level);
+        $level = $this->_format_level($level);
 
         if (!$level){
             return FALSE;
         }
         
         //define variable
-        $message  = self::_createMsg($level, $msg);
-        $filepath = self::_createFilePath($this->_extensionTxt);
+        $message  = $this->_createMsg($level, $msg);
+        $filepath = $this->_createFilePath($this->_extensionTxt);
         
         //self::_addLogToFile($filepath, $message);
-        self::writeLog($filepath, $message);
+        $this->writeLog($filepath, $message);
         return TRUE;
     }
 
@@ -204,7 +204,7 @@ class EggLogProvider
     public function writeLogJson($message)
     {
         //validate message
-        $isValid = self::_validateMessage($message);
+        $isValid = $this->_validateMessage($message);
 
         if (!$isValid) {
             return $isValid;
@@ -214,9 +214,9 @@ class EggLogProvider
         $messageJson = json_encode($message, JSON_FORCE_OBJECT) . "\n\n";
 
         //create log file path
-        $filepathJson = self::_createFilePath($this->_extensionJson); 
+        $filepathJson = $this->_createFilePath($this->_extensionJson); 
         //write log to file
-        self::writeLog($filepathJson, $messageJson);
+        $this->writeLog($filepathJson, $messageJson);
 
         return TRUE;
     }
@@ -336,7 +336,7 @@ class EggLogProvider
     private function _createParameter($param, $reqObj)
     {
         //format input param
-        $params = self::_formatParam($params, $reqObj["mode"]);
+        $params = $this->_formatParam($params, $reqObj["mode"]);
 
         //api_in
         $parameters = array(
@@ -363,7 +363,7 @@ class EggLogProvider
         } else if ($reqObj["name"] == $this->APIOUT){
             $parameters["return_data"]   = json_encode($parameters["return_data"], JSON_FORCE_OBJECT);
             $parameters["return_status"] = $params['return_status'];
-            $parameters["response_time"] = self::_createResponseTime($params['start']);
+            $parameters["response_time"] = $this->_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
             $parameters["controller"]    = $params['action']['route_controller'];
 
@@ -378,7 +378,7 @@ class EggLogProvider
             $parameters["caller_ip"]     = $params['caller_ip'];
             $parameters["return_data"]   = json_encode($parameters["return_data"], JSON_FORCE_OBJECT);
             $parameters["return_status"] = $params['return_status'];
-            $parameters["response_time"] = self::_createResponseTime($params['start']);
+            $parameters["response_time"] = $this->_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
 
         } else if($resObj["name"] == $this->TEXT) {
@@ -394,45 +394,44 @@ class EggLogProvider
 
     public function logApiIn(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["apiIn"]);
+        $data = $this->_createParameter($params, $this->reqType["apiIn"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
 
     public function logApiOut(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["apiOut"]);
+        $data = $this->_createParameter($params, $this->reqType["apiOut"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
 
     public function logWebIn(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["webIn"]);
+        $data = $this->_createParameter($params, $this->reqType["webIn"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
 
     public function logCurlIn(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["curlIn"]);
+        $data = $this->_createParameter($params, $this->reqType["curlIn"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
 
     public function logCurlOut(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["curlOut"]);
+        $data = $this->_createParameter($params, $this->reqType["curlOut"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
 
     public function logText(array $params)
     {
-        $data = self::_createParameter($param, $this->reqType["text"]);
+        $data = $this->_createParameter($params, $this->reqType["text"]);
         
-        self::writeLogJson($data);
+        $this->writeLogJson($data);
     }
-
     
 }
