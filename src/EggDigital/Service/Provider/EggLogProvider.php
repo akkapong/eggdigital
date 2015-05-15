@@ -32,27 +32,27 @@ class EggLogProvider
 
     protected $reqType = array(
             "apiIn"     => array(
-                            "name" => $APIIN,
+                            "name" => $this->APIIN,
                             "mode" => "IN",
                             ),
             "apiOut"    => array(
-                            "name" => $APIOUT,
+                            "name" => $this->APIOUT,
                             "mode" => "OUT",
                             ),
             "curlIn"    => array(
-                            "name" => $CURLIN,
+                            "name" => $this->CURLIN,
                             "mode" => "IN",
                             ),
             "curlOut"   => array(
-                            "name" => $CURLOUT,
+                            "name" => $this->CURLOUT,
                             "mode" => "OUT",
                             ),
             "webIn"     => array(
-                            "name" => $WEBIN,
+                            "name" => $this->WEBIN,
                             "mode" => "IN",
                             ),
             "text"      => array(
-                            "name" => $TEXT,
+                            "name" => $this->TEXT,
                             "mode" => "TEXT",
                             )
         );
