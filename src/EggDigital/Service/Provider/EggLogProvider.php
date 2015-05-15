@@ -30,7 +30,14 @@ class EggLogProvider
 
     protected $TEXT_DESC_LIST = ['action_type', 'file_size', 'short_code', 'file_type', 'file_name'];
 
-    protected $reqType = array(
+    protected $reqType = array();
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $reqType = array(
             "apiIn"     => array(
                             "name" => $this->APIIN,
                             "mode" => "IN",
@@ -57,11 +64,6 @@ class EggLogProvider
                             )
         );
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
         try {
             $config = \Config::get('config');
 
