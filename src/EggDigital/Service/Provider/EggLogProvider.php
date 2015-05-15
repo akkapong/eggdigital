@@ -215,6 +215,7 @@ class EggLogProvider
 
         //create log file path
         $filepathJson = $this->_createFilePath($this->_extensionJson); 
+       
         //write log to file
         $this->writeLog($filepathJson, $messageJson);
 
@@ -388,6 +389,7 @@ class EggLogProvider
             $parameters["controller"]   = $params['action']['route_controller'];
             $parameters["descriptions"] = $params['descriptions'];
         }
+        return $parameters;
 
     }
 
