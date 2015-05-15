@@ -26,6 +26,9 @@ class EggLogProvider
     protected $CURLIN  = "curl_req";
     protected $CURLOUT = "curl_res";
     protected $WEBIN   = "web_in";
+    protected $TEXT    = "text";
+
+    protected $TEXT_DESC_LIST = ['action_type', 'file_size', 'short_code', 'file_type', 'file_name'];
 
     protected $reqType = array(
             "apiIn"     => array(
@@ -44,9 +47,13 @@ class EggLogProvider
                             "name" => $CURLOUT,
                             "mode" => "OUT",
                             ),
-            "webIn"   => array(
+            "webIn"     => array(
                             "name" => $WEBIN,
                             "mode" => "IN",
+                            ),
+            "text"      => array(
+                            "name" => $TEXT,
+                            "mode" => "TEXT",
                             )
         );
 
@@ -225,7 +232,8 @@ class EggLogProvider
 
             return $result;
         } catch (Exception $e) {
-            var_dump($e->getMessage());
+            //var_dump($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -283,16 +291,35 @@ class EggLogProvider
             $params['requestInput'] = array($params['requestInput']);
         } 
 
+        if (is_array($params['description'])) {
+            $params['descriptions'] = array($params['description']);
+            //clear discription
+            $params['description']  = "";
+        }
+
+        if ((isset($params['descriptions'])) && (!is_array($params['descriptions']))) {
+            $params['descriptions'] = array($params['descriptions']);
+        }
+
         //Replacements Params
         $params['requestInput'] = $this->replacementsParams($params['requestInput']);
 
         if ($mode == "OUT");
         {
             if (!is_array($params['return_data'])) {
-                $params['return_data'] = array($params['return_data']);\
+                $params['return_data'] = array($params['return_data']);
             }
 
+        } else if ($mode == "TEXT") {
+            $descriptions = array();
+            foreach ($params['descriptions'] as $key => $value) {
+                if (in_array($key, $this->TEXT_DESC_LIST)) {
+                    $descriptions[$key] = $value;
+                }
+            }
         }
+
+
 
         return $params;
     }
@@ -324,6 +351,7 @@ class EggLogProvider
             'url'            => $params['requestFullUrl'],
             'param'          => json_encode($params["requestInput"], JSON_FORCE_OBJECT)
         );
+
         if (($reqObj["name"] == $this->APIIN) || ($reqObj["name"] == $this->WEBIN)) {
             $parameters["method"]     = $params['action']['route_method'];
             $parameters["ip"]         = $params['ip'];
@@ -351,6 +379,12 @@ class EggLogProvider
             $parameters["response_time"] = self::_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
 
+        } else if($resObj["name"] == $this->TEXT) {
+            $parameters["method"]       = $params['action']['route_method'];
+            $parameters["ip"]           = $params['ip'];
+            $parameters["caller_ip"]    = $params['caller_ip'];
+            $parameters["controller"]   = $params['action']['route_controller'];
+            $parameters["descriptions"] = $params['descriptions'];
         }
 
     }
@@ -387,6 +421,13 @@ class EggLogProvider
     public function logCurlOut(array $params)
     {
         $data = self::_createParameter($param, $this->reqType["curlOut"]);
+        
+        self::writeLogJson($data);
+    }
+
+    public function logText(array $params)
+    {
+        $data = self::_createParameter($param, $this->reqType["text"]);
         
         self::writeLogJson($data);
     }
