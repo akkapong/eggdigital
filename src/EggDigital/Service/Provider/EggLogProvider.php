@@ -306,7 +306,7 @@ class EggLogProvider
         //Replacements Params
         $params['requestInput'] = $this->replacementsParams($params['requestInput']);
 
-        if ($mode == "OUT");
+        if ($mode == "OUT")
         {
             if (!is_array($params['return_data'])) {
                 $params['return_data'] = array($params['return_data']);
