@@ -63,7 +63,7 @@ class EggLogProvider
                             "mode" => "TEXT",
                             )
         );
-
+        
         try {
             $config = \Config::get('config');
 
@@ -99,7 +99,7 @@ class EggLogProvider
 
     private function _validateMessage($message)
     {
-        if (empty(trim($message))) {
+        if (empty($message)) {
             return FALSE;
         }
 
@@ -226,7 +226,6 @@ class EggLogProvider
     {
         try {
             $resultPutContent = file_put_contents($filepath, $message, FILE_APPEND);
-
             if ($resultPutContent === false) {
                 $result = false;
             } else {
