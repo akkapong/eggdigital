@@ -37,7 +37,7 @@ class EggLogProvider
      */
     public function __construct()
     {
-        $reqType = array(
+        $this->reqType = array(
             "apiIn"     => array(
                             "name" => $this->APIIN,
                             "mode" => "IN",
@@ -333,7 +333,7 @@ class EggLogProvider
         return $response_time;
     }
 
-    private function _createParameter($param, $reqObj)
+    private function _createParameter($params, $reqObj)
     {
         //format input param
         $params = $this->_formatParam($params, $reqObj["mode"]);
