@@ -361,7 +361,7 @@ class EggLogProvider
             $parameters["controller"] = $params['action']['route_controller'];
 
         } else if ($reqObj["name"] == $this->APIOUT){
-            $parameters["return_data"]   = json_encode($parameters["return_data"], JSON_FORCE_OBJECT);
+            $parameters["return_data"]   = json_encode($params["return_data"], JSON_FORCE_OBJECT);
             $parameters["return_status"] = $params['return_status'];
             $parameters["response_time"] = $this->_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
@@ -376,7 +376,7 @@ class EggLogProvider
             $parameters["curl_method"]   = $params['service'];
             $parameters["ip"]            = $params['ip'];
             $parameters["caller_ip"]     = $params['caller_ip'];
-            $parameters["return_data"]   = json_encode($parameters["return_data"], JSON_FORCE_OBJECT);
+            $parameters["return_data"]   = json_encode($params["return_data"], JSON_FORCE_OBJECT);
             $parameters["return_status"] = $params['return_status'];
             $parameters["response_time"] = $this->_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
