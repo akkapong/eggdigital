@@ -4,7 +4,7 @@ namespace EggDigital\Service\Provider;
 
 class EggLogProvider
 {
-    protected $_activity_log_threshold = 3;
+    protected $_activity_log_threshold = 'ALL';
     protected $_enabled                = TRUE;
     protected $_date_fmt               = 'Y-m-d H:i:s';
     protected $_messageDelimeter       = ' --> ';
@@ -63,27 +63,51 @@ class EggLogProvider
                             "mode" => "TEXT",
                             )
         );
+
+        $res = $this->getConfig("LOG_PATH");
+        if (!$res) {
+            throw new \Exception("Not found log path in config file.");
+        }
+        $this->_log_path = $res;
+
+        $this->_activity_log_threshold = $this->getConfig("activity_log_threshold");
         
         try {
-            $config = \Config::get('config');
-
-            if (empty($config['LOG_PATH'])) {
-                throw new \Exception('Not config log path');
-            } else {
-                $this->_log_path = $config['LOG_PATH'];
-            }
-
             if ( ! defined('__LOG_DELIMITER__')) {
                 throw new \Exception('Not defined __LOG_DELIMITER__');
             }
 
-            if (is_numeric(@$config['activity_log_threshold'])) {
-                $this->_activity_log_threshold = $config['activity_log_threshold'];
-            }
         } catch (\Exception $e) {
             //var_dump($e->getMessage());
             throw new \Exception($e->getMessage());
         }
+    }
+
+    private function getConfig($key){
+        
+        $config = \Config::get('config');
+
+        $result = "";
+
+        switch($key){
+            case 'LOG_PATH' : 
+                if (!isset($config['LOG_PATH'])) {
+                    $result = false;
+                } else {
+                    $result = $config['LOG_PATH'];
+                }
+                break;
+            case 'activity_log_threshold' : 
+                if (!isset($config['activity_log_threshold'])) {
+                    $config['activity_log_threshold'] = "ALL";
+                }
+                $result = (int)$this->_levels[$config['activity_log_threshold']];
+                break;
+            default: 
+                $result = "";
+        }
+
+        return $result;
     }
 
     public function activity_log($activity, $message)
@@ -435,4 +459,5 @@ class EggLogProvider
         $this->writeLogJson($data);
     }
     
+
 }
