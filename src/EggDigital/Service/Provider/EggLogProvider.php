@@ -410,7 +410,7 @@ class EggLogProvider
             $parameters["response_time"] = $this->_createResponseTime($params['start']);
             $parameters["return_code"]   = (string) $params['return_code'];
 
-        } else if($resObj["name"] == $this->TEXT) {
+        } else if($reqObj["name"] == $this->TEXT) {
             $parameters["method"]       = $params['action']['route_method'];
             $parameters["ip"]           = $params['ip'];
             $parameters["caller_ip"]    = $params['caller_ip'];
