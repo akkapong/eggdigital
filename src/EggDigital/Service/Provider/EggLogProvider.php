@@ -411,6 +411,10 @@ class EggLogProvider
             $parameters["caller_ip"]    = $params['caller_ip'];
             $parameters["controller"]   = $params['action']['route_controller'];
             $parameters["descriptions"] = $params['descriptions'];
+            if (isset($params['log_sub_type'])) {
+                $parameters["log_sub_type"] = $params['log_sub_type'];
+            }
+            
         }
         return $parameters;
 
