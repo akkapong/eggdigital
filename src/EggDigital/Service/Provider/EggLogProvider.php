@@ -4,6 +4,7 @@ namespace EggDigital\Service\Provider;
 
 class EggLogProvider
 {
+    protected $__LOG_DELIMITER__       = "|";
     protected $_activity_log_threshold = 'ALL';
     protected $_enabled                = TRUE;
     protected $_date_fmt               = 'Y-m-d H:i:s';
@@ -72,16 +73,16 @@ class EggLogProvider
 
         $this->_activity_log_threshold = $this->getConfig("activity_log_threshold");
         
-        try {
-            if ( ! defined('__LOG_DELIMITER__')) {
-                throw new \Exception('Not defined __LOG_DELIMITER__');
-            }
+    //     try {
+    //         if ( ! defined('__LOG_DELIMITER__')) {
+    //             throw new \Exception('Not defined __LOG_DELIMITER__');
+    //         }
 
-        } catch (\Exception $e) {
-            //var_dump($e->getMessage());
-            throw new \Exception($e->getMessage());
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         //var_dump($e->getMessage());
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
 
     private function getConfig($key){
         
@@ -143,7 +144,7 @@ class EggLogProvider
             return $isValid;
         }
 
-        $a_message = explode(__LOG_DELIMITER__, $message);
+        $a_message = explode($__LOG_DELIMITER__, $message);
 
         foreach ($a_message as $m) {
             $a_msg[] = $m;
