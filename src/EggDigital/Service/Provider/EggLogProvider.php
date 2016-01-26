@@ -318,7 +318,7 @@ class EggLogProvider
             $params['requestInput'] = array($params['requestInput']);
         } 
 
-        if (is_array($params['description'])) {
+        if (!is_array($params['description'])) {
             $params['descriptions'] = array($params['description']);
             //clear discription
             $params['description']  = "";
@@ -338,12 +338,16 @@ class EggLogProvider
             }
 
         } else if ($mode == "TEXT") {
-            $descriptions = array();
-            foreach ($params['descriptions'] as $key => $value) {
-                if (in_array($key, $this->TEXT_DESC_LIST)) {
-                    $descriptions[$key] = $value;
+            if (isset($params['descriptions'])) {
+                $descriptions = array();
+                foreach ($params['descriptions'] as $key => $value) {
+                    if (in_array($key, $this->TEXT_DESC_LIST)) {
+                        $descriptions[$key] = $value;
+                    }
                 }
+                $params['descriptions'] = $descriptions;
             }
+            
         }
 
 
