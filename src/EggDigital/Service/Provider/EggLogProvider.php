@@ -82,7 +82,7 @@ class EggLogProvider
     //         //var_dump($e->getMessage());
     //         throw new \Exception($e->getMessage());
     //     }
-    // }
+    }
 
     private function getConfig($key){
         
